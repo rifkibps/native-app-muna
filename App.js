@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow:1, justifyContent:'center'}}>
+    <ScrollView contentContainerStyle={styles.containerSchroll}>
       <View
         style={{
           backgroundColor: '#fafafa',
@@ -30,11 +30,7 @@ const App = () => {
           }}>
           <Image
             source={require('./src/images/descan.png')}
-            style={{
-              width: 100,
-              height: 100,
-              resizeMode:'contain',
-            }}
+            style={styles.image}
           />
         </View>
         <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>
@@ -46,14 +42,7 @@ const App = () => {
         <TextInput
           editable
           value={email}
-          style={{
-            backgroundColor: '#fafafa',
-            elevation: 1,
-            marginHorizontal: 20,
-            marginTop: 20,
-            borderRadius: 10,
-            paddingLeft: 15,
-          }}
+          style={styles.textInput}
           placeholder="Masukan Email ..."
           onChangeText={text => setEmail(text)}
         />
@@ -61,40 +50,58 @@ const App = () => {
         <TextInput
           editable
           value={email}
-          style={{
-            backgroundColor: '#fafafa',
-            elevation: 1,
-            marginHorizontal: 20,
-            marginTop: 20,
-            borderRadius: 10,
-            paddingLeft: 15,
-          }}
+          style={styles.textInput}
           placeholder="Masukan Password ..."
           secureTextEntry={true}
           onChangeText={pass => setPassword(pass)}
         />
 
         <TouchableOpacity
-          style={{
-            backgroundColor: '#3498db',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: 20,
-            borderRadius: 10,
-            elevation: 1,
-            paddingVertical: 15,
-            marginHorizontal: 20,
-          }}>
+          style={[styles.buttonLogin, {marginBottom:0}]}>
           <Text style={{color: '#fafafa', fontWeight: 'bold'}}>Login</Text>
         </TouchableOpacity>
-        
+
+        <TouchableOpacity
+          style={[styles.buttonLogin, {backgroundColor:'#5dade2'}]}>
+          <Text style={{color: '#fafafa', fontWeight: 'bold'}}>Register</Text>
+        </TouchableOpacity>
+
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  containerSchroll : {
+    flexGrow:1,
+    justifyContent:'center',
+  },
 
-})
+  image : {
+    width: 100,
+    height: 100,
+    resizeMode:'contain',
+  },
+
+  textInput : {
+    backgroundColor: '#fafafa',
+    elevation: 1,
+    marginHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 10,
+    paddingLeft: 15,
+  },
+
+  buttonLogin : {
+    backgroundColor: '#3498db',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+    borderRadius: 10,
+    elevation: 1,
+    paddingVertical: 15,
+    marginHorizontal: 20,
+  },
+});
 
 export default App;
