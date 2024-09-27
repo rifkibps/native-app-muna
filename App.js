@@ -1,124 +1,108 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  Alert,
-  FlatList,
+  StyleSheet,
   StatusBar,
+  FlatList,
+  Touchable,
+  TouchableOpacity,
+  ToastAndroid
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import Clipboard from '@react-native-clipboard/clipboard';
 
-const adm = [
-  'Katobu',
-  'Batalaiworu',
-  'Lasalepa',
-  'Napabalano',
-  'Duruka',
-  'Lohia',
-  'Kabangka',
-  'Kontunaga',
-  'Watopute',
-];
-
-const admObj = [
-  {
-    kec: 'Katobu',
-    kab: 'Muna',
-  },
-  {
-    kec: 'Batalaiworu',
-    kab: 'Muna',
-  },
-  {
-    kec: 'Lasalepa',
-    kab: 'Muna',
-  },
-  {
-    kec: 'Napabalano',
-    kab: 'Muna',
-  },
-  {
-    kec: 'Duruka',
-    kab: 'Muna',
-  },
-  {
-    kec: 'Lohia',
-    kab: 'Muna',
-  },
-  {
-    kec: 'Kabangka',
-    kab: 'Muna',
-  },
-];
 
 const App = () => {
+
+  const copyKecamatan = (item) => {
+    Clipboard.setString('Kecamatan ' + item)
+    ToastAndroid.show('Kecamatan ' +item+' erhasil di salin!', ToastAndroid.SHORT)
+  }
+
+  const [dataAdm, setDataAdm] = useState([
+    'Katobu',
+    'Batalaiworu',
+    'Lasalepa',
+    'Napabalano',
+    'Towea',
+    'Kabangka',
+  ]);
+
   return (
-    <View style={{flex: 1, backgroundColor: '#fafafa'}}>
-      <StatusBar backgroundColor={'#21252b'} barStyle={'light-content'} />
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#fafafa',
+      }}>
+      <StatusBar barStyle="light-content" backgroundColor="#282c34" />
+
+      {/* Header */}
       <View
         style={{
-          marginHorizontal: 20,
-          marginVertical: 20,
+          backgroundColor: '#282c34',
+          paddingVertical: 18,
+          paddingLeft: 20,
+          flexDirection: 'row',
+          alignItems: 'center',
         }}>
-        <Text
+        <View
           style={{
-            fontSize: 16,
-            fontWeight: 'bold',
+            marginRight: 10,
           }}>
-          Daftar Kecamatan Kabupaten Muna:
-        </Text>
-      </View>
-      <FlatList
-        data={admObj}
-        renderItem={({item, index}) => (
-          <View
+          <Icon name="bars" size={25} color="#ffffff" />
+        </View>
+
+        <View style={{flex: 1}}>
+          <Text
             style={{
-              backgroundColor: '#3498db',
-              marginHorizontal: 20,
-              marginVertical: 5,
-              borderRadius: 10,
+              color: '#fafafa',
+              fontSize: 18,
+              fontWeight: 'bold',
               elevation: 3,
-              padding: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'row'
             }}>
-            <Text
+            Kaimoji
+          </Text>
+        </View>
+      </View>
+      {/* End of Header */}
+
+      {/* Flat List */}
+      <View>
+        <FlatList
+          data={dataAdm}
+          style={{
+            marginHorizontal: 20,
+            marginVertical: 10,
+          }}
+          renderItem={({item, index}) => (
+            <View
               style={{
-                color: '#fafafa',
-                fontSize: 15,
-                marginHorizontal :10
+                elevation: 3,
+                backgroundColor: '#2e86c1',
+                padding: 10,
+                marginBottom: 8,
+                borderRadius: 10,
               }}>
-              Kecamatan: {item.kec}
-            </Text>
-            <Text
-              style={{
-                color: '#fafafa',
-                fontSize: 15,
-              }}>
-              Kabupaten/Kota: {item.kab}
-            </Text>
-          </View>
-        )}
-      />
-      {/* <FlatList
-        data={adm}
-        renderItem={({item, index}) => (
-          <View
-            style={{
-              marginHorizontal: 20,
-              marginVertical:5,
-              paddingVertical:10,
-              justifyContent:'center',
-              alignItems: 'center',
-              backgroundColor: '#3498db',
-              elevation : 3,
-              borderRadius:10,
-            }}>
-            <Text style={{color : '#fafafa'}}>{item}</Text>
-          </View>
-        )}
-      /> */}
+              <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=> copyKecamatan(item)}>
+                <View style={{flex: 1}}>
+                  <Text
+                    style={{
+                      color: '#fafafa',
+                    }}>
+                    {index + 1}. Kecamatan: {item}
+                  </Text>
+                </View>
+                <View>
+                  <Icon name="copy" style={{marginHorizontal: 10}} color="#fafafa" />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      </View>
+      {/* End of Flat List */}
     </View>
   );
 };
